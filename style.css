@@ -405,24 +405,60 @@ header {
     color: #26a69a;
 }
 
-/* 统计弹窗标签按钮可读性修复 */
+/* 健康数据统计弹窗布局与按钮优化 */
+#stats-modal .modal-dialog {
+    max-width: min(1100px, 95vw);
+}
+
+#stats-modal .modal-content {
+    border-radius: 16px;
+}
+
+#stats-modal .modal-header {
+    border-bottom: 1px solid #e9ecef;
+    background: linear-gradient(135deg, #f8fbff 0%, #eef6ff 100%);
+}
+
+#stats-tabs {
+    border-bottom: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+#stats-tabs .nav-item {
+    margin: 0;
+}
+
 #stats-tabs .nav-link {
     color: #495057 !important;
     background-color: #f1f3f5;
     border: 1px solid #dee2e6;
-    margin: 0 4px 4px 0;
-    border-radius: 8px;
+    border-radius: 999px;
+    padding: 8px 14px;
+    font-size: 0.9rem;
+    line-height: 1.2;
+    white-space: nowrap;
 }
 
 #stats-tabs .nav-link:hover {
     color: #1e88e5 !important;
     background-color: #e3f2fd;
+    border-color: #90caf9;
 }
 
 #stats-tabs .nav-link.active {
     color: #ffffff !important;
     background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
     border-color: #1e88e5;
+    box-shadow: 0 6px 16px rgba(30, 136, 229, 0.3);
+}
+
+#stats-tab-content {
+    background: #f8fafc;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 16px;
 }
 
 #stats-btn {
@@ -817,6 +853,16 @@ footer {
     color: #ffffff !important;
     background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
     border-color: #1565c0;
+}
+
+.dark-theme #stats-modal .modal-header {
+    background: linear-gradient(135deg, #1f2530 0%, #232b38 100%);
+    border-bottom-color: #333;
+}
+
+.dark-theme #stats-tab-content {
+    background: #1f1f1f;
+    border-color: #333;
 }
 
 .dark-theme .achievement-item {
