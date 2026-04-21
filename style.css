@@ -405,6 +405,26 @@ header {
     color: #26a69a;
 }
 
+/* 统计弹窗标签按钮可读性修复 */
+#stats-tabs .nav-link {
+    color: #495057 !important;
+    background-color: #f1f3f5;
+    border: 1px solid #dee2e6;
+    margin: 0 4px 4px 0;
+    border-radius: 8px;
+}
+
+#stats-tabs .nav-link:hover {
+    color: #1e88e5 !important;
+    background-color: #e3f2fd;
+}
+
+#stats-tabs .nav-link.active {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
+    border-color: #1e88e5;
+}
+
 #stats-btn {
     background: linear-gradient(135deg, #4caf50 0%, #81c784 100%);
     color: white;
@@ -780,6 +800,23 @@ footer {
 
 .dark-theme .modal-footer {
     border-top-color: #333;
+}
+
+.dark-theme #stats-tabs .nav-link {
+    color: #e0e0e0 !important;
+    background-color: #2f2f2f;
+    border-color: #444;
+}
+
+.dark-theme #stats-tabs .nav-link:hover {
+    color: #90caf9 !important;
+    background-color: #1f2a38;
+}
+
+.dark-theme #stats-tabs .nav-link.active {
+    color: #ffffff !important;
+    background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
+    border-color: #1565c0;
 }
 
 .dark-theme .achievement-item {
