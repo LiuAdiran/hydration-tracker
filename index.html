@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喝水提醒</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="water-icon">💧</span> hydration tracker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">个人资料</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="challenges.html">饮水挑战</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="knowledge.html">饮水知识</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="help.html">帮助</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">关于</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <header class="text-center my-6">
+            <h1 class="display-3 mb-3">
+                <span class="water-icon">💧</span>
+                <span class="app-title"> hydration tracker</span>
+            </h1>
+            <p class="tagline">Nourish your body, one sip at a time</p>
+        </header>
+
+        <main>
+            <!-- 统计卡片 -->
+            <div class="card mb-4 wide-card">
+                <div class="card-body text-center">
+                    <h3 class="card-title mb-4">今日已喝水</h3>
+                    <div id="water-stats" class="water-cups">
+                        <!-- 水杯图标将通过JavaScript动态生成 -->
+                    </div>
+                    
+                    <!-- 饮水目标进度条 -->
+                    <div class="progress-container mt-4">
+                        <div class="progress-label">
+                            <span>今日进度</span>
+                            <span id="progress-percent">0%</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" id="water-progress" role="progressbar" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <p class="card-text text-muted mt-3">目标: <span id="goal-cups"></span></p>
+                </div>
+            </div>
+
+            <!-- 小动物解锁区域 -->
+            <div class="card mb-4 wide-card">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4">🧸 宠物成长</h3>
+                    <div id="pet-container">
+                        <div class="pet-item" data-level="1">
+                            <div class="pet-icon locked">🐶</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="2">
+                            <div class="pet-icon locked">🐱</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="3">
+                            <div class="pet-icon locked">🐰</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="4">
+                            <div class="pet-icon locked">🐻</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="5">
+                            <div class="pet-icon locked">🐼</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="6">
+                            <div class="pet-icon locked">🐨</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="7">
+                            <div class="pet-icon locked">🐵</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="8">
+                            <div class="pet-icon locked">🐔</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="9">
+                            <div class="pet-icon locked">🐧</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="10">
+                            <div class="pet-icon locked">🐸</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="11">
+                            <div class="pet-icon locked">🐳</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="12">
+                            <div class="pet-icon locked">🦊</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="13">
+                            <div class="pet-icon locked">🐺</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="14">
+                            <div class="pet-icon locked">🐮</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                        <div class="pet-item" data-level="15">
+                            <div class="pet-icon locked">🐷</div>
+                            <div class="pet-cover locked">?</div>
+                            <div class="pet-label"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 倒计时卡片 -->
+            <div class="card mb-4 wide-card">
+                <div class="card-body text-center">
+                    <h2 class="card-title" id="countdown">下次提醒: 60:00</h2>
+                </div>
+            </div>
+            
+            <!-- 季节性饮水建议卡片 -->
+            <div class="card mb-4 wide-card">
+                <div class="card-body">
+                    <h3 class="card-title text-center mb-4" style="font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', sans-serif;">🌤️ 季节性饮水建议</h3>
+                    <div id="seasonal-tip" class="seasonal-tip">
+                        <!-- 季节性饮水建议将通过JavaScript生成 -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- 按钮组 -->
+            <div class="button-container">
+                <button class="btn btn-primary" id="drink-btn" title="已喝水">
+                    <i class="fas fa-tint fa-lg"></i>
+                </button>
+                <button class="btn btn-success" id="decrease-btn" title="减少喝水">
+                    <i class="fas fa-minus fa-lg"></i>
+                </button>
+                <button class="btn btn-info" id="start-btn" title="开始提醒">
+                    <i class="fas fa-bell fa-lg"></i>
+                </button>
+                <button class="btn btn-warning" id="stop-btn" title="停止提醒">
+                    <i class="fas fa-stop fa-lg"></i>
+                </button>
+                <button class="btn btn-secondary" id="settings-btn" title="设置">
+                    <i class="fas fa-cog fa-lg"></i>
+                </button>
+                <button class="btn btn-success" id="stats-btn" title="统计">
+                    <i class="fas fa-chart-bar fa-lg"></i>
+                </button>
+                <button class="btn btn-primary" id="share-btn" title="分享">
+                    <i class="fas fa-share-alt fa-lg"></i>
+                </button>
+                <button class="btn btn-secondary" id="theme-btn" title="切换主题">
+                    <i class="fas fa-moon fa-lg"></i>
+                </button>
+                <button class="btn btn-danger" id="reset-btn" title="重置统计">
+                    <i class="fas fa-redo fa-lg"></i>
+                </button>
+            </div>
+        </main>
+
+        <!-- 页脚 -->
+        <footer class="text-center mt-6 mb-4">
+            <p class="text-muted">© 2026 喝水提醒应用</p>
+        </footer>
+    </div>
+
+    <!-- 设置模态框 -->
+    <div class="modal fade" id="settings-modal" tabindex="-1" aria-labelledby="settings-modal-label" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="settings-modal-label">设置</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="interval-input" class="form-label">提醒间隔 (分钟)</label>
+                        <input type="number" class="form-control" id="interval-input" min="1" value="60">
+                    </div>
+                    <div class="mb-3">
+                        <label for="goal-input" class="form-label">每日喝水目标 (次)</label>
+                        <input type="number" class="form-control" id="goal-input" min="1" value="8">
+                    </div>
+                    
+                    <!-- 个性化饮水计划 -->
+                    <div class="mb-3">
+                        <label for="weight-input" class="form-label">体重 (kg)</label>
+                        <input type="number" class="form-control" id="weight-input" min="30" max="200" value="60">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="activity-level" class="form-label">活动量</label>
+                        <select class="form-control" id="activity-level">
+                            <option value="sedentary">久坐不动</option>
+                            <option value="lightly">轻度活动</option>
+                            <option value="moderately" selected>中度活动</option>
+                            <option value="very">重度活动</option>
+                            <option value="extra">极高活动</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">推荐饮水量</label>
+                        <div class="form-control bg-light" id="recommended-water">
+                            计算中...
+                        </div>
+                    </div>
+                    
+                    <!-- 天气设置 -->
+                    <div class="mb-3">
+                        <label class="form-label">天气信息</label>
+                        <div class="form-control bg-light" id="weather-info">
+                            加载天气中...
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="location-input" class="form-label">位置 (城市名称)</label>
+                        <input type="text" class="form-control" id="location-input" placeholder="输入您所在的城市">
+                    </div>
+                    
+                    <!-- 音效设置 -->
+                    <div class="mb-3">
+                        <label for="sound-effect" class="form-label">提醒音效</label>
+                        <select class="form-control" id="sound-effect">
+                            <option value="none">无音效</option>
+                            <option value="water">水滴声</option>
+                            <option value="bell">铃声</option>
+                            <option value="notification">通知声</option>
+                        </select>
+                    </div>
+                    
+                    <!-- 智能提醒设置 -->
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="smart-reminder">
+                            <label class="form-check-label" for="smart-reminder">
+                                启用智能提醒
+                            </label>
+                        </div>
+                        <small class="text-muted">根据您的饮水习惯自动调整提醒时间</small>
+                    </div>
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="save-settings-btn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 通知模态框 -->
+    <div class="modal fade" id="notification-modal" tabindex="-1" aria-labelledby="notification-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content notification-modal">
+                <div class="modal-body text-center">
+                    <div class="notification-icon mb-4">💧</div>
+                    <h3 class="modal-title mb-3">Stay Hydrated</h3>
+                    <p id="notification-message" class="notification-text">Time to drink water! Staying hydrated is essential for your health.</p>
+                    <div class="modal-buttons mt-5">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Remind Me Later</button>
+                        <button type="button" class="btn btn-primary" id="notification-drink-btn">I've Drunk</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 目标达成模态框 -->
+    <div class="modal fade" id="goal-modal" tabindex="-1" aria-labelledby="goal-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content goal-modal">
+                <div class="modal-body text-center">
+                    <div class="goal-icon mb-4">🎉</div>
+                    <h3 class="modal-title mb-3">Goal Achieved!</h3>
+                    <p class="goal-text">Congratulations! You've reached your daily water goal!</p>
+                    <div class="modal-buttons mt-5">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Great!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 统计报告模态框 -->
+    <div class="modal fade" id="stats-modal" tabindex="-1" aria-labelledby="stats-modal-label" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">健康数据统计</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="stats-container">
+                        <!-- 标签页导航 -->
+                        <ul class="nav nav-tabs mb-4" id="stats-tabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="weekly-tab" data-bs-toggle="tab" data-bs-target="#weekly-stats" type="button" role="tab" aria-controls="weekly-stats" aria-selected="true">周统计</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="monthly-tab" data-bs-toggle="tab" data-bs-target="#monthly-stats" type="button" role="tab" aria-controls="monthly-stats" aria-selected="false">月统计</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="overall-tab" data-bs-toggle="tab" data-bs-target="#overall-stats" type="button" role="tab" aria-controls="overall-stats" aria-selected="false">总体统计</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="time-distribution-tab" data-bs-toggle="tab" data-bs-target="#time-distribution" type="button" role="tab" aria-controls="time-distribution" aria-selected="false">饮水时间分布</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="habits-tab" data-bs-toggle="tab" data-bs-target="#habits" type="button" role="tab" aria-controls="habits" aria-selected="false">饮水习惯分析</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="health-tab" data-bs-toggle="tab" data-bs-target="#health" type="button" role="tab" aria-controls="health" aria-selected="false">健康监测</button>
+                            </li>
+                        </ul>
+                        
+                        <!-- 标签页内容 -->
+                        <div class="tab-content" id="stats-tab-content">
+                            <div class="tab-pane fade show active" id="weekly-stats" role="tabpanel" aria-labelledby="weekly-tab">
+                                <!-- 周统计数据将通过JavaScript生成 -->
+                            </div>
+                            <div class="tab-pane fade" id="monthly-stats" role="tabpanel" aria-labelledby="monthly-tab">
+                                <!-- 月统计数据将通过JavaScript生成 -->
+                            </div>
+                            <div class="tab-pane fade" id="overall-stats" role="tabpanel" aria-labelledby="overall-tab">
+                                <!-- 总体统计数据将通过JavaScript生成 -->
+                            </div>
+                            <div class="tab-pane fade" id="time-distribution" role="tabpanel" aria-labelledby="time-distribution-tab">
+                                <div id="time-chart" class="chart-container mb-4"></div>
+                                <div id="drink-times-list" class="mt-3"></div>
+                            </div>
+                            <div class="tab-pane fade" id="habits" role="tabpanel" aria-labelledby="habits-tab">
+                                <div id="habits-analysis" class="habits-container">
+                                    <!-- 饮水习惯分析将通过JavaScript生成 -->
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="health" role="tabpanel" aria-labelledby="health-tab">
+                                <div id="health-monitoring" class="health-container">
+                                    <!-- 健康监测将通过JavaScript生成 -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" id="export-btn">导出数据</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">关闭</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "drinkwater-frontend",
+  "version": "1.0.0",
+  "description": "纯前端饮水提醒应用（本地存储）",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx serve ."
+  },
+  "dependencies": {},
+  "devDependencies": {},
+  "keywords": [
+    "water",
+    "reminder",
+    "health",
+    "frontend",
+    "localstorage"
+  ],
+  "author": "",
+  "license": "MIT"
+}

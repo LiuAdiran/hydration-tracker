@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>帮助 - 喝水提醒</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <span class="water-icon">💧</span> hydration tracker
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.html">个人资料</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="challenges.html">饮水挑战</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="knowledge.html">饮水知识</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="help.html">帮助</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">关于</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4 wide-card">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">帮助中心</h1>
+                        
+                        <div class="help-section">
+                            <h2 class="mb-3">📋 常见问题</h2>
+                            
+                            <div class="accordion" id="faqAccordion">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading1">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+                                            如何设置每日饮水目标？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>点击首页的"设置"按钮，在设置面板中输入您的体重、选择活动水平，系统会自动计算推荐饮水量。您也可以手动调整每日喝水目标（1-15杯）。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading2">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+                                            智能提醒是如何工作的？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>智能提醒功能会分析您的饮水模式，识别您最常喝水的时段。在这些时段，提醒间隔会缩短；在其他时段，提醒间隔会延长。此外，天气炎热时提醒频率也会增加。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading3">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+                                            如何查看我的饮水统计？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>点击首页的"统计"按钮，您可以查看周统计、月统计、总体统计、饮水时间分布、饮水习惯分析和健康监测等详细数据。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading4">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse4">
+                                            如何导出我的饮水数据？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>在统计页面中，点击"导出数据"按钮，系统会将您的饮水数据导出为CSV文件，您可以在Excel或其他电子表格软件中查看。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading5">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse5">
+                                            成就系统如何工作？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>当您达到特定的饮水目标时，会解锁相应的成就。成就包括"初次尝试"、"饮水新手"、"连续达标7天"等。您可以在首页查看已解锁的成就。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading6">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse6">
+                                            如何切换深色主题？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>点击首页右上角的月亮/太阳图标按钮，即可在浅色主题和深色主题之间切换。您的主题偏好会被保存，下次访问时自动应用。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading7">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse7">
+                                            数据会丢失吗？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>您的数据存储在浏览器的LocalStorage中，只要不清除浏览器数据，数据就不会丢失。建议定期导出数据作为备份。</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading8">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse8">
+                                            如何重置所有数据？
+                                        </button>
+                                    </h2>
+                                    <div id="collapse8" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                        <div class="accordion-body">
+                                            <p>在统计页面中，点击"重置统计"按钮可以重置今日的饮水数据。如需重置所有历史数据，请清除浏览器LocalStorage或联系技术支持。</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="help-section">
+                            <h2 class="mb-3">🔧 使用指南</h2>
+                            
+                            <div class="guide-step">
+                                <h4>第一步：设置个人信息</h4>
+                                <p>首次使用时，点击"设置"按钮，输入您的体重和选择活动水平。系统会根据这些信息计算推荐饮水量。</p>
+                            </div>
+
+                            <div class="guide-step">
+                                <h4>第二步：设置提醒</h4>
+                                <p>设置提醒间隔（默认60分钟），您可以选择启用智能提醒功能，让系统根据您的习惯自动调整提醒时间。</p>
+                            </div>
+
+                            <div class="guide-step">
+                                <h4>第三步：开始饮水</h4>
+                                <p>点击"喝水"按钮记录每次饮水。系统会自动记录饮水时间并更新统计数据。</p>
+                            </div>
+
+                            <div class="guide-step">
+                                <h4>第四步：查看统计</h4>
+                                <p>定期查看统计页面，了解您的饮水习惯和健康状况，根据建议调整饮水计划。</p>
+                            </div>
+
+                            <div class="guide-step">
+                                <h4>第五步：参与挑战</h4>
+                                <p>访问饮水挑战页面，参与各种有趣的挑战，增加饮水的趣味性。</p>
+                            </div>
+                        </div>
+
+                        <div class="help-section">
+                            <h2 class="mb-3">💡 小贴士</h2>
+                            <ul class="tips-list">
+                                <li><i class="fas fa-lightbulb text-warning me-2"></i>建议在早晨起床后喝一杯温水，有助于启动新陈代谢</li>
+                                <li><i class="fas fa-lightbulb text-warning me-2"></i>避免在睡前2小时大量饮水，以免影响睡眠</li>
+                                <li><i class="fas fa-lightbulb text-warning me-2"></i>可以尝试在水中加入柠檬片或薄荷，增加饮水的趣味性</li>
+                                <li><i class="fas fa-lightbulb text-warning me-2"></i>随身携带水杯，随时补充水分</li>
+                                <li><i class="fas fa-lightbulb text-warning me-2"></i>设置合理的饮水目标，逐步增加饮水量</li>
+                                <li><i class="fas fa-lightbulb text-warning me-2"></i>天气炎热或运动后，适当增加饮水量</li>
+                            </ul>
+                        </div>
+
+                        <div class="help-section">
+                            <h2 class="mb-3">📞 联系支持</h2>
+                            <p>如果您遇到问题或有任何疑问，欢迎联系我们的支持团队：</p>
+                            <div class="contact-info">
+                                <p><i class="fas fa-envelope me-2"></i> 邮箱：support@hydrationtracker.com</p>
+                                <p><i class="fab fa-twitter me-2"></i> Twitter：@HydrationTracker</p>
+                                <p><i class="fab fa-github me-2"></i> GitHub：github.com/hydration-tracker</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="text-center mt-5">
+        <p class="text-muted">© 2026 喝水提醒应用</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
