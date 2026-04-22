@@ -71,6 +71,13 @@ body {
     box-shadow: inset 0 0 0 1px #ffffff, 0 8px 20px rgba(18, 44, 76, 0.12);
 }
 
+.game-canvas-wrap {
+    margin-left: -30px;
+    margin-right: -30px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
 .game-panel {
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 251, 255, 0.98) 100%);
 }
@@ -2214,5 +2221,12 @@ footer {
     .btn {
         font-size: 1rem;
         padding: 10px 20px;
+    }
+
+    .game-canvas-wrap {
+        margin-left: -20px;
+        margin-right: -20px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

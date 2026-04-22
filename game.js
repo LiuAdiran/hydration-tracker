@@ -11,7 +11,12 @@ class RunnerGame {
             achievements: 'runnerGameAchievementsData'
         };
 
-        this.groundY = this.canvas.height - 32;
+        this.logicalWidth = 900;
+        this.logicalHeight = 240;
+        this.groundOffset = 32;
+        this.resizeCanvas();
+
+        this.groundY = this.canvas.height - this.groundOffset;
         this.player = {
             x: 48,
             y: this.groundY - 38,
@@ -72,6 +77,27 @@ class RunnerGame {
         });
 
         this.restartBtn.addEventListener('click', () => this.reset(true));
+        window.addEventListener('resize', () => this.handleResize());
+    }
+
+    resizeCanvas() {
+        const cssWidth = this.canvas.clientWidth || this.logicalWidth;
+        const cssHeight = (cssWidth * this.logicalHeight) / this.logicalWidth;
+        this.canvas.width = Math.round(cssWidth);
+        this.canvas.height = Math.round(cssHeight);
+        this.ctx.imageSmoothingEnabled = false;
+    }
+
+    handleResize() {
+        const oldGroundY = this.groundY;
+        this.resizeCanvas();
+        this.groundY = this.canvas.height - this.groundOffset;
+        if (!this.player.jumping) {
+            this.player.y = this.groundY - this.player.h;
+        } else {
+            this.player.y += this.groundY - oldGroundY;
+        }
+        this.groundDots = this.createGroundDots();
     }
 
     loadBestScore() {
