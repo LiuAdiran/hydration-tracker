@@ -1899,6 +1899,49 @@ class WaterReminder {
         }, 2600);
     }
 
+    showConfirm(message, onConfirm, confirmText = '确认') {
+        const modalId = `confirm-modal-${Date.now()}`;
+        const modalWrapper = document.createElement('div');
+        modalWrapper.innerHTML = `
+            <div class="modal fade" id="${modalId}" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">请确认操作</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="mb-0">${message}</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-danger" id="${modalId}-confirm">${confirmText}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modalWrapper);
+
+        const modalElement = document.getElementById(modalId);
+        const confirmBtn = document.getElementById(`${modalId}-confirm`);
+        const modal = new bootstrap.Modal(modalElement);
+
+        const cleanup = () => {
+            modalElement.removeEventListener('hidden.bs.modal', cleanup);
+            modal.dispose();
+            modalWrapper.remove();
+        };
+
+        confirmBtn.addEventListener('click', () => {
+            onConfirm();
+            modal.hide();
+        });
+
+        modalElement.addEventListener('hidden.bs.modal', cleanup);
+        modal.show();
+    }
+
     updateWaterCups() {
         if (!this.waterStatsElement) return;
         
@@ -2706,11 +2749,12 @@ class WaterReminder {
     }
 
     resetStats() {
-        if (confirm('确定要重置喝水统计吗？')) {
+        this.showConfirm('确定要重置喝水统计吗？', () => {
             this.waterCount = 0;
             this.saveData();
             this.updateUI();
-        }
+            this.showToast('统计数据已重置', 'success');
+        }, '重置');
     }
 
     exportData() {

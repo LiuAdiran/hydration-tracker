@@ -569,6 +569,49 @@
                 }, 2600);
             }
 
+            showConfirm(message, onConfirm, confirmText = '确认') {
+                const modalId = `profile-confirm-${Date.now()}`;
+                const modalWrapper = document.createElement('div');
+                modalWrapper.innerHTML = `
+                    <div class="modal fade" id="${modalId}" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">请确认操作</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="mb-0">${message}</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-danger" id="${modalId}-confirm">${confirmText}</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(modalWrapper);
+
+                const modalElement = document.getElementById(modalId);
+                const confirmBtn = document.getElementById(`${modalId}-confirm`);
+                const modal = new bootstrap.Modal(modalElement);
+
+                const cleanup = () => {
+                    modalElement.removeEventListener('hidden.bs.modal', cleanup);
+                    modal.dispose();
+                    modalWrapper.remove();
+                };
+
+                confirmBtn.addEventListener('click', () => {
+                    onConfirm();
+                    modal.hide();
+                });
+
+                modalElement.addEventListener('hidden.bs.modal', cleanup);
+                modal.show();
+            }
+
             saveProfile() {
                 this.userData.name = document.getElementById('profile-name-input').value;
                 this.userData.avatar = document.getElementById('profile-avatar-select').value;
@@ -602,19 +645,19 @@
             }
 
             clearCache() {
-                if (confirm('确定要清除所有缓存数据吗？这将重置您的所有进度。')) {
+                this.showConfirm('确定要清除所有缓存数据吗？这将重置您的所有进度。', () => {
                     localStorage.clear();
                     this.showToast('缓存已清除！', 'success');
                     location.reload();
-                }
+                }, '清除');
             }
 
             deleteAccount() {
-                if (confirm('确定要删除账户吗？此操作不可恢复！')) {
+                this.showConfirm('确定要删除账户吗？此操作不可恢复！', () => {
                     localStorage.clear();
                     this.showToast('账户已删除！', 'warning');
                     window.location.href = 'index.html';
-                }
+                }, '删除');
             }
         }
 
