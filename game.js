@@ -11,28 +11,49 @@ class RunnerGame {
             achievements: 'runnerGameAchievementsData'
         };
 
-        this.player = { x: 60, y: 180, w: 26, h: 40, vy: 0, jumping: false };
-        this.groundY = 220;
-        this.gravity = 0.7;
-        this.jumpPower = -12;
-        this.speed = 6;
-        this.obstacles = [];
+        this.groundY = this.canvas.height - 32;
+        this.player = {
+            x: 78,
+            y: this.groundY - 40,
+            w: 32,
+            h: 40,
+            vy: 0,
+            jumping: false
+        };
+
+        this.gravity = 0.72;
+        this.jumpPower = -13.8;
+        this.baseSpeed = 6.4;
+        this.speed = this.baseSpeed;
+        this.maxSpeed = 12.5;
+        this.scoreScale = 0.05;
+        this.distance = 0;
         this.score = 0;
         this.bestScore = this.loadBestScore();
         this.gameOver = false;
-        this.lastObstacleTick = 0;
-        this.tick = 0;
+
+        this.obstacles = [];
+        this.nextObstacleIn = this.randomObstacleGap();
+        this.decorClouds = this.createClouds();
+        this.groundDots = this.createGroundDots();
+        this.dayNightCycle = 0;
+        this.lastTimestamp = 0;
 
         this.bestScoreElement.textContent = this.bestScore;
+        this.scoreElement.textContent = this.score;
 
         this.bindEvents();
-        this.loop();
+        this.loop(0);
     }
 
     bindEvents() {
         window.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
+            if (e.code === 'Space' || e.code === 'ArrowUp') {
                 e.preventDefault();
+                if (this.gameOver && e.code === 'Space') {
+                    this.reset();
+                    return;
+                }
                 this.jump();
             }
         });
@@ -65,10 +86,10 @@ class RunnerGame {
         ];
 
         const achievements = this.loadAchievements();
-        const unlockedIds = new Set(achievements.map(a => a.id));
+        const unlockedIds = new Set(achievements.map((a) => a.id));
         let unlockedNow = 0;
 
-        configs.forEach(config => {
+        configs.forEach((config) => {
             if (score >= config.threshold && !unlockedIds.has(config.id)) {
                 achievements.push({
                     ...config,
@@ -86,6 +107,35 @@ class RunnerGame {
         }
     }
 
+    createClouds() {
+        const clouds = [];
+        for (let i = 0; i < 5; i++) {
+            clouds.push({
+                x: i * 220 + 120,
+                y: 30 + Math.random() * 70,
+                w: 45 + Math.random() * 30,
+                speed: 0.45 + Math.random() * 0.3
+            });
+        }
+        return clouds;
+    }
+
+    createGroundDots() {
+        const dots = [];
+        for (let i = 0; i < 48; i++) {
+            dots.push({
+                x: (i * this.canvas.width) / 48,
+                y: this.groundY + 5 + Math.random() * 14,
+                w: 4 + Math.random() * 10
+            });
+        }
+        return dots;
+    }
+
+    randomObstacleGap() {
+        return 240 + Math.random() * 230;
+    }
+
     jump() {
         if (this.gameOver) {
             return;
@@ -97,20 +147,22 @@ class RunnerGame {
     }
 
     reset() {
-        this.player.y = 180;
+        this.player.y = this.groundY - this.player.h;
         this.player.vy = 0;
         this.player.jumping = false;
         this.obstacles = [];
+        this.distance = 0;
         this.score = 0;
-        this.tick = 0;
-        this.lastObstacleTick = 0;
-        this.speed = 6;
+        this.speed = this.baseSpeed;
+        this.nextObstacleIn = this.randomObstacleGap();
         this.gameOver = false;
+        this.lastTimestamp = 0;
     }
 
     spawnObstacle() {
-        const h = 24 + Math.random() * 36;
-        const w = 18 + Math.random() * 14;
+        const isTall = Math.random() < 0.5;
+        const h = isTall ? 48 + Math.random() * 12 : 28 + Math.random() * 10;
+        const w = isTall ? 20 + Math.random() * 8 : 34 + Math.random() * 14;
         this.obstacles.push({
             x: this.canvas.width + 20,
             y: this.groundY - h,
@@ -119,13 +171,31 @@ class RunnerGame {
         });
     }
 
-    update() {
+    drawRunner() {
+        const x = this.player.x;
+        const y = this.player.y;
+        const legOffset = Math.floor(this.distance / 8) % 2 === 0 ? 1 : -1;
+
+        this.ctx.fillStyle = '#1f2937';
+        this.ctx.fillRect(x + 6, y + 7, 18, 14);
+        this.ctx.fillRect(x + 14, y, 14, 11);
+        this.ctx.fillRect(x + 24, y + 4, 4, 3);
+        this.ctx.fillRect(x + 8, y + 21, 6, 11 + legOffset);
+        this.ctx.fillRect(x + 18, y + 21, 6, 11 - legOffset);
+
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.fillRect(x + 18, y + 4, 3, 3);
+    }
+
+    update(deltaFactor) {
         if (this.gameOver) return;
 
-        this.tick++;
-        this.score += 1;
-        this.speed = 6 + Math.min(6, this.score / 250);
+        this.dayNightCycle += 0.00055 * deltaFactor;
+        this.distance += this.speed * deltaFactor;
+        this.score = Math.floor(this.distance * this.scoreScale);
         this.scoreElement.textContent = this.score;
+
+        this.speed = Math.min(this.maxSpeed, this.baseSpeed + this.score / 260);
 
         if (this.score > this.bestScore) {
             this.bestScore = this.score;
@@ -133,31 +203,51 @@ class RunnerGame {
             this.saveBestScore();
         }
 
-        this.player.vy += this.gravity;
-        this.player.y += this.player.vy;
-        if (this.player.y >= 180) {
-            this.player.y = 180;
+        this.player.vy += this.gravity * deltaFactor;
+        this.player.y += this.player.vy * deltaFactor;
+        const floorY = this.groundY - this.player.h;
+        if (this.player.y >= floorY) {
+            this.player.y = floorY;
             this.player.vy = 0;
             this.player.jumping = false;
         }
 
-        const obstacleInterval = Math.max(55, 120 - this.score / 20);
-        if (this.tick - this.lastObstacleTick > obstacleInterval) {
+        this.nextObstacleIn -= this.speed * deltaFactor;
+        if (this.nextObstacleIn <= 0) {
             this.spawnObstacle();
-            this.lastObstacleTick = this.tick;
+            this.nextObstacleIn = this.randomObstacleGap() - Math.min(90, this.score * 0.1);
         }
 
-        this.obstacles.forEach(ob => {
-            ob.x -= this.speed;
+        this.obstacles.forEach((ob) => {
+            ob.x -= this.speed * deltaFactor;
         });
-        this.obstacles = this.obstacles.filter(ob => ob.x + ob.w > -20);
+        this.obstacles = this.obstacles.filter((ob) => ob.x + ob.w > -20);
 
-        this.obstacles.forEach(ob => {
+        this.decorClouds.forEach((cloud) => {
+            cloud.x -= cloud.speed * deltaFactor;
+            if (cloud.x + cloud.w < -20) {
+                cloud.x = this.canvas.width + 50 + Math.random() * 120;
+                cloud.y = 30 + Math.random() * 70;
+            }
+        });
+
+        this.groundDots.forEach((dot) => {
+            dot.x -= this.speed * 0.7 * deltaFactor;
+            if (dot.x + dot.w < 0) {
+                dot.x = this.canvas.width + Math.random() * 60;
+                dot.y = this.groundY + 5 + Math.random() * 14;
+                dot.w = 4 + Math.random() * 10;
+            }
+        });
+
+        const hitboxPaddingX = 3;
+        const hitboxPaddingY = 2;
+        this.obstacles.forEach((ob) => {
             const hit =
-                this.player.x < ob.x + ob.w &&
-                this.player.x + this.player.w > ob.x &&
-                this.player.y < ob.y + ob.h &&
-                this.player.y + this.player.h > ob.y;
+                this.player.x + hitboxPaddingX < ob.x + ob.w &&
+                this.player.x + this.player.w - hitboxPaddingX > ob.x &&
+                this.player.y + hitboxPaddingY < ob.y + ob.h &&
+                this.player.y + this.player.h - hitboxPaddingY > ob.y;
             if (hit) {
                 this.gameOver = true;
                 this.unlockAchievement(this.score);
@@ -166,45 +256,102 @@ class RunnerGame {
         });
     }
 
-    draw() {
-        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    drawSky() {
+        const t = (Math.sin(this.dayNightCycle) + 1) / 2;
+        const dayTop = [241, 245, 249];
+        const dayBottom = [255, 255, 255];
+        const nightTop = [19, 24, 39];
+        const nightBottom = [45, 55, 72];
 
-        this.ctx.fillStyle = '#e8f5e8';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        const blend = (a, b) => Math.round(a * t + b * (1 - t));
+        const top = `rgb(${blend(dayTop[0], nightTop[0])}, ${blend(dayTop[1], nightTop[1])}, ${blend(dayTop[2], nightTop[2])})`;
+        const bottom = `rgb(${blend(dayBottom[0], nightBottom[0])}, ${blend(dayBottom[1], nightBottom[1])}, ${blend(dayBottom[2], nightBottom[2])})`;
 
-        this.ctx.strokeStyle = '#90a4ae';
+        const g = this.ctx.createLinearGradient(0, 0, 0, this.groundY);
+        g.addColorStop(0, top);
+        g.addColorStop(1, bottom);
+        this.ctx.fillStyle = g;
+        this.ctx.fillRect(0, 0, this.canvas.width, this.groundY);
+
+        const starAlpha = 1 - t;
+        if (starAlpha > 0.15) {
+            this.ctx.fillStyle = `rgba(255,255,255,${Math.min(0.9, starAlpha)})`;
+            for (let i = 0; i < 20; i++) {
+                const sx = (i * 97 + 11) % this.canvas.width;
+                const sy = (i * 53 + 27) % (this.groundY - 60);
+                this.ctx.fillRect(sx, sy, 2, 2);
+            }
+        }
+    }
+
+    drawGround() {
+        this.ctx.strokeStyle = '#9aa5b1';
         this.ctx.lineWidth = 2;
         this.ctx.beginPath();
         this.ctx.moveTo(0, this.groundY);
         this.ctx.lineTo(this.canvas.width, this.groundY);
         this.ctx.stroke();
 
-        this.ctx.fillStyle = '#1e88e5';
-        this.ctx.fillRect(this.player.x, this.player.y, this.player.w, this.player.h);
-        this.ctx.fillStyle = '#fff';
-        this.ctx.fillRect(this.player.x + 17, this.player.y + 8, 4, 4);
-
-        this.ctx.fillStyle = '#455a64';
-        this.obstacles.forEach(ob => {
-            this.ctx.fillRect(ob.x, ob.y, ob.w, ob.h);
+        this.ctx.fillStyle = '#b0bac6';
+        this.groundDots.forEach((dot) => {
+            this.ctx.fillRect(dot.x, dot.y, dot.w, 2);
         });
-
-        if (this.gameOver) {
-            this.ctx.fillStyle = 'rgba(0,0,0,0.5)';
-            this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-            this.ctx.fillStyle = '#fff';
-            this.ctx.font = 'bold 30px Microsoft YaHei';
-            this.ctx.fillText('游戏结束', this.canvas.width / 2 - 65, 100);
-            this.ctx.font = '18px Microsoft YaHei';
-            this.ctx.fillText(`本次得分：${this.score}`, this.canvas.width / 2 - 55, 140);
-            this.ctx.fillText('点击“重新开始”再来一局', this.canvas.width / 2 - 95, 170);
-        }
     }
 
-    loop() {
-        this.update();
+    drawClouds() {
+        this.ctx.fillStyle = '#d2dae3';
+        this.decorClouds.forEach((cloud) => {
+            this.ctx.fillRect(cloud.x, cloud.y, cloud.w, 14);
+            this.ctx.fillRect(cloud.x + 8, cloud.y - 6, 18, 8);
+            this.ctx.fillRect(cloud.x + 26, cloud.y - 9, 20, 10);
+        });
+    }
+
+    drawObstacles() {
+        this.ctx.fillStyle = '#4b5563';
+        this.obstacles.forEach((ob) => {
+            this.ctx.fillRect(ob.x, ob.y, ob.w, ob.h);
+            const notches = Math.max(2, Math.floor(ob.h / 16));
+            for (let i = 0; i < notches; i++) {
+                this.ctx.fillRect(ob.x - 3, ob.y + i * 14 + 4, 3, 5);
+            }
+        });
+    }
+
+    drawGameOver() {
+        if (!this.gameOver) return;
+
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.45)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = '#ffffff';
+        this.ctx.font = 'bold 30px Microsoft YaHei';
+        this.ctx.fillText('游戏结束', this.canvas.width / 2 - 65, 100);
+        this.ctx.font = '18px Microsoft YaHei';
+        this.ctx.fillText(`本次得分：${this.score}`, this.canvas.width / 2 - 58, 140);
+        this.ctx.fillText('按“重新开始”或空格键继续', this.canvas.width / 2 - 108, 170);
+    }
+
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.drawSky();
+        this.drawClouds();
+        this.drawGround();
+        this.drawRunner();
+        this.drawObstacles();
+        this.drawGameOver();
+    }
+
+    loop(timestamp) {
+        if (!this.lastTimestamp) {
+            this.lastTimestamp = timestamp;
+        }
+        const delta = timestamp - this.lastTimestamp;
+        this.lastTimestamp = timestamp;
+        const deltaFactor = Math.min(2.3, delta / 16.67 || 1);
+
+        this.update(deltaFactor);
         this.draw();
-        requestAnimationFrame(() => this.loop());
+        requestAnimationFrame((nextTs) => this.loop(nextTs));
     }
 }
 
