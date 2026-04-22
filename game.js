@@ -13,10 +13,10 @@ class RunnerGame {
 
         this.groundY = this.canvas.height - 32;
         this.player = {
-            x: 78,
-            y: this.groundY - 40,
-            w: 32,
-            h: 40,
+            x: 48,
+            y: this.groundY - 38,
+            w: 40,
+            h: 38,
             vy: 0,
             jumping: false
         };
@@ -197,17 +197,33 @@ class RunnerGame {
     drawRunner() {
         const x = this.player.x;
         const y = this.player.y;
-        const legOffset = Math.floor(this.distance / 8) % 2 === 0 ? 1 : -1;
+        const runPhase = Math.floor(this.distance / 10) % 2 === 0 ? 1 : -1;
+        const tailWave = Math.sin(this.distance * 0.05) * 2;
 
+        // Tail
+        this.ctx.fillStyle = '#ffb18a';
+        this.ctx.fillRect(x - 8, y + 12 + tailWave, 10, 4);
+        this.ctx.fillRect(x - 13, y + 10 + tailWave, 6, 4);
+
+        // Body
+        this.ctx.fillStyle = '#ffb18a';
+        this.ctx.fillRect(x + 8, y + 11, 22, 15);
+
+        // Head
+        this.ctx.fillRect(x + 23, y + 4, 14, 12);
+        this.ctx.fillRect(x + 24, y + 1, 4, 4);
+        this.ctx.fillRect(x + 31, y + 1, 4, 4);
+
+        // Legs
+        this.ctx.fillStyle = '#f79667';
+        this.ctx.fillRect(x + 10, y + 26, 5, 10 + runPhase);
+        this.ctx.fillRect(x + 20, y + 26, 5, 10 - runPhase);
+
+        // Eye and nose
         this.ctx.fillStyle = '#1f2937';
-        this.ctx.fillRect(x + 6, y + 7, 18, 14);
-        this.ctx.fillRect(x + 14, y, 14, 11);
-        this.ctx.fillRect(x + 24, y + 4, 4, 3);
-        this.ctx.fillRect(x + 8, y + 21, 6, 11 + legOffset);
-        this.ctx.fillRect(x + 18, y + 21, 6, 11 - legOffset);
-
-        this.ctx.fillStyle = '#ffffff';
-        this.ctx.fillRect(x + 18, y + 4, 3, 3);
+        this.ctx.fillRect(x + 33, y + 8, 2, 2);
+        this.ctx.fillStyle = '#ef476f';
+        this.ctx.fillRect(x + 37, y + 11, 2, 2);
     }
 
     update(deltaFactor) {
@@ -305,6 +321,16 @@ class RunnerGame {
                 this.ctx.fillRect(sx, sy, 2, 2);
             }
         }
+
+        // Soft far hills for richer depth
+        this.ctx.fillStyle = `rgba(171, 198, 226, ${0.2 + t * 0.18})`;
+        this.ctx.beginPath();
+        this.ctx.moveTo(0, this.groundY);
+        this.ctx.quadraticCurveTo(140, this.groundY - 28, 280, this.groundY);
+        this.ctx.quadraticCurveTo(420, this.groundY - 24, 560, this.groundY);
+        this.ctx.quadraticCurveTo(700, this.groundY - 30, this.canvas.width, this.groundY);
+        this.ctx.closePath();
+        this.ctx.fill();
     }
 
     drawGround() {
@@ -331,13 +357,17 @@ class RunnerGame {
     }
 
     drawObstacles() {
-        this.ctx.fillStyle = '#4b5563';
+        this.ctx.fillStyle = '#5f6b7a';
         this.obstacles.forEach((ob) => {
             this.ctx.fillRect(ob.x, ob.y, ob.w, ob.h);
-            const notches = Math.max(2, Math.floor(ob.h / 16));
+            const notches = Math.max(2, Math.floor(ob.h / 14));
             for (let i = 0; i < notches; i++) {
-                this.ctx.fillRect(ob.x - 3, ob.y + i * 14 + 4, 3, 5);
+                this.ctx.fillStyle = '#4b5563';
+                this.ctx.fillRect(ob.x - 3, ob.y + i * 13 + 4, 3, 4);
             }
+            this.ctx.fillStyle = '#7a8898';
+            this.ctx.fillRect(ob.x + 3, ob.y + 3, Math.max(2, ob.w - 8), 3);
+            this.ctx.fillStyle = '#5f6b7a';
         });
     }
 
@@ -357,11 +387,11 @@ class RunnerGame {
     drawStartOverlay() {
         if (this.hasStarted || this.gameOver) return;
 
-        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.62)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillStyle = '#1f2937';
+        this.ctx.fillStyle = '#2f3e4f';
         this.ctx.font = 'bold 30px Microsoft YaHei';
-        this.ctx.fillText('准备开始', this.canvas.width / 2 - 63, 95);
+        this.ctx.fillText('猫咪准备冲刺', this.canvas.width / 2 - 95, 95);
         this.ctx.font = '18px Microsoft YaHei';
         this.ctx.fillText('按空格键开始，或点击下方“开始游戏”', this.canvas.width / 2 - 148, 132);
         this.ctx.fillText('开始后可按空格/上键/点击画布跳跃', this.canvas.width / 2 - 145, 162);

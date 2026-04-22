@@ -33,12 +33,12 @@
 
     <div class="container">
         <div class="card wide-card">
-            <div class="card-body text-center">
-                <h1 class="mb-3">🦖 跑酷小游戏</h1>
-                <p class="text-muted mb-3">按空格键/点击屏幕跳跃，躲避障碍物。分数越高，解锁越多成就！</p>
-                <div class="d-flex justify-content-center gap-4 mb-2">
-                    <div>当前分数：<strong id="game-score">0</strong></div>
-                    <div>最高分：<strong id="best-score">0</strong></div>
+            <div class="card-body text-center game-panel">
+                <h1 class="mb-2">🐱 猫咪跑酷</h1>
+                <p class="text-muted mb-3">按空格键/点击画布跳跃，躲避路障。分数越高，解锁越多成就！</p>
+                <div class="game-scoreboard mb-2">
+                    <div class="game-score-item">当前分数：<strong id="game-score">0</strong></div>
+                    <div class="game-score-item">最高分：<strong id="best-score">0</strong></div>
                 </div>
                 <canvas id="runner-canvas" width="900" height="240" class="runner-canvas" aria-label="跑酷游戏画布"></canvas>
                 <div class="mt-3">

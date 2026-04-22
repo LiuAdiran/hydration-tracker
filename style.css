@@ -59,18 +59,42 @@ body {
 }
 
 .runner-canvas {
+    display: block;
     width: 100%;
-    max-width: 900px;
-    border: 2px solid #cfd8dc;
-    border-radius: 12px;
+    max-width: 100%;
+    height: auto;
+    aspect-ratio: 15 / 4;
+    margin: 0 auto;
+    border: 2px solid #d4deea;
+    border-radius: 16px;
     background: #f5fbff;
-    box-shadow: inset 0 0 0 1px #ffffff;
+    box-shadow: inset 0 0 0 1px #ffffff, 0 8px 20px rgba(18, 44, 76, 0.12);
+}
+
+.game-panel {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(247, 251, 255, 0.98) 100%);
+}
+
+.game-scoreboard {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.game-score-item {
+    background: #f1f7ff;
+    border: 1px solid #d7e7fb;
+    border-radius: 999px;
+    padding: 6px 14px;
+    color: #365273;
+    font-weight: 600;
 }
 
 .game-achievement-tip {
     max-width: 540px;
     margin: 0 auto;
-    background: #f8f9fa;
+    background: linear-gradient(135deg, #f8fbff 0%, #f1f7ff 100%);
     border-radius: 10px;
     padding: 14px 16px;
     border-left: 4px solid #1e88e5;
