@@ -1879,6 +1879,26 @@ class WaterReminder {
         this.updateProgress();
     }
 
+    showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `app-toast app-toast-${type}`;
+        toast.textContent = message;
+        document.body.appendChild(toast);
+
+        setTimeout(() => {
+            toast.classList.add('show');
+        }, 20);
+
+        setTimeout(() => {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentNode) {
+                    toast.parentNode.removeChild(toast);
+                }
+            }, 250);
+        }, 2600);
+    }
+
     updateWaterCups() {
         if (!this.waterStatsElement) return;
         
@@ -2223,9 +2243,9 @@ class WaterReminder {
                 this.settingsModal.hide();
             }
         } else if (newGoal > 15) {
-            alert('每日喝水目标不能超过15杯，喝太多水对身体不好');
+            this.showToast('每日喝水目标不能超过15杯，喝太多水对身体不好', 'warning');
         } else if (newWeight < 30 || newWeight > 200) {
-            alert('体重必须在30-200kg之间');
+            this.showToast('体重必须在30-200kg之间', 'warning');
         }
     }
 
@@ -2654,7 +2674,7 @@ class WaterReminder {
     fallbackShare(shareText) {
         navigator.clipboard.writeText(shareText)
             .then(() => {
-                alert('分享内容已复制到剪贴板，您可以粘贴到社交媒体中！');
+                this.showToast('分享内容已复制到剪贴板，您可以粘贴到社交媒体中！', 'success');
             })
             .catch(err => {
                 console.error('复制失败:', err);
@@ -2676,7 +2696,7 @@ class WaterReminder {
                     const textarea = shareModal.querySelector('textarea');
                     textarea.select();
                     document.execCommand('copy');
-                    alert('分享内容已复制到剪贴板！');
+                    this.showToast('分享内容已复制到剪贴板！', 'success');
                 });
                 
                 document.getElementById('close-share-btn').addEventListener('click', () => {
@@ -2696,7 +2716,7 @@ class WaterReminder {
     exportData() {
         const csvContent = this.statistics.exportData();
         if (!csvContent) {
-            alert('暂无数据可导出');
+            this.showToast('暂无数据可导出', 'info');
             return;
         }
         

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="饮水提醒与健康统计应用，帮助你建立稳定的每日补水习惯。">
+    <meta name="theme-color" content="#1e88e5">
     <title>喝水提醒</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -12,7 +14,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <span class="water-icon">💧</span> hydration tracker
+                <span class="water-icon">💧</span> 喝水提醒
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
@@ -42,16 +44,17 @@
         </div>
     </nav>
     
+    <a href="#main-content" class="skip-link">跳到主要内容</a>
     <div class="container">
         <header class="text-center my-6">
             <h1 class="display-3 mb-3">
                 <span class="water-icon">💧</span>
-                <span class="app-title"> hydration tracker</span>
+                <span class="app-title">喝水提醒</span>
             </h1>
-            <p class="tagline">Nourish your body, one sip at a time</p>
+            <p class="tagline">科学补水，每一口都更健康</p>
         </header>
 
-        <main>
+        <main id="main-content">
             <!-- 统计卡片 -->
             <div class="card mb-4 wide-card">
                 <div class="card-body text-center">
@@ -178,31 +181,31 @@
 
             <!-- 按钮组 -->
             <div class="button-container">
-                <button class="btn btn-primary" id="drink-btn" title="已喝水">
+                <button class="btn btn-primary" id="drink-btn" title="已喝水" aria-label="记录已喝一杯水">
                     <i class="fas fa-tint fa-lg"></i>
                 </button>
-                <button class="btn btn-success" id="decrease-btn" title="减少喝水">
+                <button class="btn btn-success" id="decrease-btn" title="减少喝水" aria-label="减少一杯喝水记录">
                     <i class="fas fa-minus fa-lg"></i>
                 </button>
-                <button class="btn btn-info" id="start-btn" title="开始提醒">
+                <button class="btn btn-info" id="start-btn" title="开始提醒" aria-label="开始饮水提醒">
                     <i class="fas fa-bell fa-lg"></i>
                 </button>
-                <button class="btn btn-warning" id="stop-btn" title="停止提醒">
+                <button class="btn btn-warning" id="stop-btn" title="停止提醒" aria-label="停止饮水提醒">
                     <i class="fas fa-stop fa-lg"></i>
                 </button>
-                <button class="btn btn-secondary" id="settings-btn" title="设置">
+                <button class="btn btn-secondary" id="settings-btn" title="设置" aria-label="打开设置">
                     <i class="fas fa-cog fa-lg"></i>
                 </button>
-                <button class="btn btn-success" id="stats-btn" title="统计">
+                <button class="btn btn-success" id="stats-btn" title="统计" aria-label="打开健康数据统计">
                     <i class="fas fa-chart-bar fa-lg"></i>
                 </button>
-                <button class="btn btn-primary" id="share-btn" title="分享">
+                <button class="btn btn-primary" id="share-btn" title="分享" aria-label="分享饮水成就">
                     <i class="fas fa-share-alt fa-lg"></i>
                 </button>
-                <button class="btn btn-secondary" id="theme-btn" title="切换主题">
+                <button class="btn btn-secondary" id="theme-btn" title="切换主题" aria-label="切换明暗主题">
                     <i class="fas fa-moon fa-lg"></i>
                 </button>
-                <button class="btn btn-danger" id="reset-btn" title="重置统计">
+                <button class="btn btn-danger" id="reset-btn" title="重置统计" aria-label="重置统计数据">
                     <i class="fas fa-redo fa-lg"></i>
                 </button>
             </div>
@@ -306,11 +309,11 @@
             <div class="modal-content notification-modal">
                 <div class="modal-body text-center">
                     <div class="notification-icon mb-4">💧</div>
-                    <h3 class="modal-title mb-3">Stay Hydrated</h3>
-                    <p id="notification-message" class="notification-text">Time to drink water! Staying hydrated is essential for your health.</p>
+                    <h3 class="modal-title mb-3">该喝水了</h3>
+                    <p id="notification-message" class="notification-text">请及时补充水分，稳定的饮水节奏更有助于健康。</p>
                     <div class="modal-buttons mt-5">
-                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Remind Me Later</button>
-                        <button type="button" class="btn btn-primary" id="notification-drink-btn">I've Drunk</button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">稍后提醒</button>
+                        <button type="button" class="btn btn-primary" id="notification-drink-btn">我已喝水</button>
                     </div>
                 </div>
             </div>
@@ -323,10 +326,10 @@
             <div class="modal-content goal-modal">
                 <div class="modal-body text-center">
                     <div class="goal-icon mb-4">🎉</div>
-                    <h3 class="modal-title mb-3">Goal Achieved!</h3>
-                    <p class="goal-text">Congratulations! You've reached your daily water goal!</p>
+                    <h3 class="modal-title mb-3">目标达成</h3>
+                    <p class="goal-text">恭喜你，今天的饮水目标已完成！</p>
                     <div class="modal-buttons mt-5">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Great!</button>
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">继续保持</button>
                     </div>
                 </div>
             </div>
@@ -338,7 +341,7 @@
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">健康数据统计</h5>
+                    <h5 class="modal-title" id="stats-modal-label">健康数据统计</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">

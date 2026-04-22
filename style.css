@@ -6,6 +6,58 @@ body {
     flex-direction: column;
 }
 
+/* 无障碍：键盘快速跳转主内容 */
+.skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 2000;
+    background: #1e88e5;
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 0 0 8px 8px;
+    text-decoration: none;
+}
+
+.skip-link:focus {
+    left: 12px;
+    top: 0;
+}
+
+.app-toast {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 2100;
+    min-width: 220px;
+    max-width: 360px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.25s ease;
+}
+
+.app-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.app-toast-info {
+    background: #1976d2;
+}
+
+.app-toast-success {
+    background: #2e7d32;
+}
+
+.app-toast-warning {
+    background: #ed6c02;
+}
+
 .container {
     max-width: 900px;
     margin: 0 auto;
@@ -102,6 +154,15 @@ header {
 .btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 无障碍：明确焦点可视状态 */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.form-control:focus-visible,
+.accordion-button:focus-visible {
+    outline: 3px solid #0d6efd;
+    outline-offset: 2px;
 }
 
 .btn:active {
@@ -2071,6 +2132,18 @@ footer {
     }
     100% {
         transform: scale(1);
+    }
+}
+
+/* 动效规范：减少动画偏好用户降级 */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
     }
 }
 
