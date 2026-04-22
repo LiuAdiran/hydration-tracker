@@ -45,6 +45,10 @@
             border-left-color: #FF9800;
         }
 
+        .achievement-card.game {
+            border-left-color: #7E57C2;
+        }
+
         .achievement-card::before {
             content: '';
             position: absolute;
@@ -58,6 +62,10 @@
 
         .achievement-card.challenge::before {
             background: linear-gradient(135deg, rgba(255, 152, 0, 0.1) 0%, transparent 70%);
+        }
+
+        .achievement-card.game::before {
+            background: linear-gradient(135deg, rgba(126, 87, 194, 0.12) 0%, transparent 70%);
         }
 
         .achievement-icon-wrapper {
@@ -77,6 +85,11 @@
         .achievement-card.challenge .achievement-icon-wrapper {
             background: linear-gradient(135deg, #FF9800 0%, #FFB74D 100%);
             box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+        }
+
+        .achievement-card.game .achievement-icon-wrapper {
+            background: linear-gradient(135deg, #7E57C2 0%, #9575CD 100%);
+            box-shadow: 0 4px 12px rgba(126, 87, 194, 0.3);
         }
 
         .achievement-content {
@@ -137,6 +150,11 @@
             color: #FF9800;
         }
 
+        .achievement-type-badge.game {
+            background-color: rgba(126, 87, 194, 0.15);
+            color: #7E57C2;
+        }
+
         .empty-achievements {
             text-align: center;
             padding: 50px 20px;
@@ -195,6 +213,11 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.html">关于</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="game.html" aria-label="打开小游戏">
+                            <i class="fas fa-gamepad"></i> 小游戏
+                        </a>
                     </li>
                 </ul>
             </div>
@@ -472,13 +495,30 @@
                                         type: 'challenge'
                                     };
                                 }) : [];
+
+                            // 加载小游戏成就
+                            let gameAchievements = [];
+                            try {
+                                const gameData = localStorage.getItem('runnerGameAchievementsData');
+                                gameAchievements = JSON.parse(gameData || '[]');
+                            } catch (e) {
+                                console.error('解析小游戏成就失败:', e);
+                                gameAchievements = [];
+                            }
+                            const unlockedGameAchievements = Array.isArray(gameAchievements)
+                                ? gameAchievements.filter(achievement => achievement.unlocked === true).map(achievement => ({
+                                    ...achievement,
+                                    type: 'game'
+                                }))
+                                : [];
                             // 合并两种成就
                             const allAchievements = [
                                 ...unlockedDrinkAchievements.map(achievement => ({
                                     ...achievement,
                                     type: 'drink'
                                 })),
-                                ...challengeAchievements
+                                ...challengeAchievements,
+                                ...unlockedGameAchievements
                             ];
                             // 按获得时间排序
                             allAchievements.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -502,8 +542,16 @@
 
                                 let html = '<div class="achievements-grid">';
                                 allAchievements.forEach(achievement => {
-                                    const typeClass = achievement.type === 'drink' ? 'drink' : 'challenge';
-                                    const typeText = achievement.type === 'drink' ? '饮水成就' : '挑战成就';
+                                    const typeClass = achievement.type === 'drink'
+                                        ? 'drink'
+                                        : achievement.type === 'challenge'
+                                            ? 'challenge'
+                                            : 'game';
+                                    const typeText = achievement.type === 'drink'
+                                        ? '饮水成就'
+                                        : achievement.type === 'challenge'
+                                            ? '挑战成就'
+                                            : '游戏成就';
                                     html += `
                                         <div class="achievement-card ${typeClass}">
                                             <div class="achievement-icon-wrapper">${achievement.icon || '🏆'}</div>
@@ -575,6 +623,7 @@
                     waterData: JSON.parse(localStorage.getItem('waterReminderData')),
                     achievements: JSON.parse(localStorage.getItem('waterAchievementsData')),
                     challenges: JSON.parse(localStorage.getItem('completedChallenges')),
+                    gameAchievements: JSON.parse(localStorage.getItem('runnerGameAchievementsData')),
                     exportDate: new Date().toISOString()
                 };
                 
