@@ -1879,69 +1879,6 @@ class WaterReminder {
         this.updateProgress();
     }
 
-    showToast(message, type = 'info') {
-        const toast = document.createElement('div');
-        toast.className = `app-toast app-toast-${type}`;
-        toast.textContent = message;
-        document.body.appendChild(toast);
-
-        setTimeout(() => {
-            toast.classList.add('show');
-        }, 20);
-
-        setTimeout(() => {
-            toast.classList.remove('show');
-            setTimeout(() => {
-                if (toast.parentNode) {
-                    toast.parentNode.removeChild(toast);
-                }
-            }, 250);
-        }, 2600);
-    }
-
-    showConfirm(message, onConfirm, confirmText = '确认') {
-        const modalId = `confirm-modal-${Date.now()}`;
-        const modalWrapper = document.createElement('div');
-        modalWrapper.innerHTML = `
-            <div class="modal fade" id="${modalId}" tabindex="-1" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">请确认操作</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p class="mb-0">${message}</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                            <button type="button" class="btn btn-danger" id="${modalId}-confirm">${confirmText}</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        document.body.appendChild(modalWrapper);
-
-        const modalElement = document.getElementById(modalId);
-        const confirmBtn = document.getElementById(`${modalId}-confirm`);
-        const modal = new bootstrap.Modal(modalElement);
-
-        const cleanup = () => {
-            modalElement.removeEventListener('hidden.bs.modal', cleanup);
-            modal.dispose();
-            modalWrapper.remove();
-        };
-
-        confirmBtn.addEventListener('click', () => {
-            onConfirm();
-            modal.hide();
-        });
-
-        modalElement.addEventListener('hidden.bs.modal', cleanup);
-        modal.show();
-    }
-
     updateWaterCups() {
         if (!this.waterStatsElement) return;
         
@@ -2286,9 +2223,9 @@ class WaterReminder {
                 this.settingsModal.hide();
             }
         } else if (newGoal > 15) {
-            this.showToast('每日喝水目标不能超过15杯，喝太多水对身体不好', 'warning');
+            window.AppUI.toast('每日喝水目标不能超过15杯，喝太多水对身体不好', 'warning');
         } else if (newWeight < 30 || newWeight > 200) {
-            this.showToast('体重必须在30-200kg之间', 'warning');
+            window.AppUI.toast('体重必须在30-200kg之间', 'warning');
         }
     }
 
@@ -2717,7 +2654,7 @@ class WaterReminder {
     fallbackShare(shareText) {
         navigator.clipboard.writeText(shareText)
             .then(() => {
-                this.showToast('分享内容已复制到剪贴板，您可以粘贴到社交媒体中！', 'success');
+                window.AppUI.toast('分享内容已复制到剪贴板，您可以粘贴到社交媒体中！', 'success');
             })
             .catch(err => {
                 console.error('复制失败:', err);
@@ -2739,7 +2676,7 @@ class WaterReminder {
                     const textarea = shareModal.querySelector('textarea');
                     textarea.select();
                     document.execCommand('copy');
-                    this.showToast('分享内容已复制到剪贴板！', 'success');
+                    window.AppUI.toast('分享内容已复制到剪贴板！', 'success');
                 });
                 
                 document.getElementById('close-share-btn').addEventListener('click', () => {
@@ -2749,18 +2686,18 @@ class WaterReminder {
     }
 
     resetStats() {
-        this.showConfirm('确定要重置喝水统计吗？', () => {
+        window.AppUI.confirm('确定要重置喝水统计吗？', () => {
             this.waterCount = 0;
             this.saveData();
             this.updateUI();
-            this.showToast('统计数据已重置', 'success');
+            window.AppUI.toast('统计数据已重置', 'success');
         }, '重置');
     }
 
     exportData() {
         const csvContent = this.statistics.exportData();
         if (!csvContent) {
-            this.showToast('暂无数据可导出', 'info');
+            window.AppUI.toast('暂无数据可导出', 'info');
             return;
         }
         
