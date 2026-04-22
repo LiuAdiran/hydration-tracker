@@ -31,6 +31,7 @@ class RunnerGame {
         this.score = 0;
         this.bestScore = this.loadBestScore();
         this.gameOver = false;
+        this.hasStarted = false;
 
         this.obstacles = [];
         this.nextObstacleIn = this.randomObstacleGap();
@@ -51,15 +52,26 @@ class RunnerGame {
             if (e.code === 'Space' || e.code === 'ArrowUp') {
                 e.preventDefault();
                 if (this.gameOver && e.code === 'Space') {
-                    this.reset();
+                    this.reset(true);
+                    return;
+                }
+                if (!this.hasStarted) {
+                    this.startGame(true);
                     return;
                 }
                 this.jump();
             }
         });
 
-        this.canvas.addEventListener('click', () => this.jump());
-        this.restartBtn.addEventListener('click', () => this.reset());
+        this.canvas.addEventListener('click', () => {
+            if (!this.hasStarted) {
+                this.startGame(false);
+                return;
+            }
+            this.jump();
+        });
+
+        this.restartBtn.addEventListener('click', () => this.reset(true));
     }
 
     loadBestScore() {
@@ -137,7 +149,7 @@ class RunnerGame {
     }
 
     jump() {
-        if (this.gameOver) {
+        if (this.gameOver || !this.hasStarted) {
             return;
         }
         if (!this.player.jumping) {
@@ -146,7 +158,14 @@ class RunnerGame {
         }
     }
 
-    reset() {
+    startGame(shouldJump = false) {
+        this.hasStarted = true;
+        if (shouldJump) {
+            this.jump();
+        }
+    }
+
+    reset(autoStart = false) {
         this.player.y = this.groundY - this.player.h;
         this.player.vy = 0;
         this.player.jumping = false;
@@ -156,7 +175,11 @@ class RunnerGame {
         this.speed = this.baseSpeed;
         this.nextObstacleIn = this.randomObstacleGap();
         this.gameOver = false;
+        this.hasStarted = false;
         this.lastTimestamp = 0;
+        if (autoStart) {
+            this.startGame(false);
+        }
     }
 
     spawnObstacle() {
@@ -188,7 +211,7 @@ class RunnerGame {
     }
 
     update(deltaFactor) {
-        if (this.gameOver) return;
+        if (this.gameOver || !this.hasStarted) return;
 
         this.dayNightCycle += 0.00055 * deltaFactor;
         this.distance += this.speed * deltaFactor;
@@ -331,6 +354,19 @@ class RunnerGame {
         this.ctx.fillText('按“重新开始”或空格键继续', this.canvas.width / 2 - 108, 170);
     }
 
+    drawStartOverlay() {
+        if (this.hasStarted || this.gameOver) return;
+
+        this.ctx.fillStyle = 'rgba(255, 255, 255, 0.55)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = '#1f2937';
+        this.ctx.font = 'bold 30px Microsoft YaHei';
+        this.ctx.fillText('准备开始', this.canvas.width / 2 - 63, 95);
+        this.ctx.font = '18px Microsoft YaHei';
+        this.ctx.fillText('按空格键开始，或点击下方“开始游戏”', this.canvas.width / 2 - 148, 132);
+        this.ctx.fillText('开始后可按空格/上键/点击画布跳跃', this.canvas.width / 2 - 145, 162);
+    }
+
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
         this.drawSky();
@@ -338,6 +374,7 @@ class RunnerGame {
         this.drawGround();
         this.drawRunner();
         this.drawObstacles();
+        this.drawStartOverlay();
         this.drawGameOver();
     }
 
