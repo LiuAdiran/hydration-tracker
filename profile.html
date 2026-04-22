@@ -554,6 +554,21 @@
                 document.getElementById('delete-account').addEventListener('click', () => this.deleteAccount());
             }
 
+            showToast(message, type = 'info') {
+                const toast = document.createElement('div');
+                toast.className = `app-toast app-toast-${type}`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                setTimeout(() => toast.classList.add('show'), 20);
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => {
+                        if (toast.parentNode) toast.parentNode.removeChild(toast);
+                    }, 250);
+                }, 2600);
+            }
+
             saveProfile() {
                 this.userData.name = document.getElementById('profile-name-input').value;
                 this.userData.avatar = document.getElementById('profile-avatar-select').value;
@@ -565,7 +580,7 @@
                 document.getElementById('user-name').textContent = this.userData.name;
                 document.querySelector('.avatar-large').textContent = this.userData.avatar;
                 
-                alert('个人资料已保存！');
+                this.showToast('个人资料已保存！', 'success');
             }
 
             exportAllData() {
@@ -589,7 +604,7 @@
             clearCache() {
                 if (confirm('确定要清除所有缓存数据吗？这将重置您的所有进度。')) {
                     localStorage.clear();
-                    alert('缓存已清除！');
+                    this.showToast('缓存已清除！', 'success');
                     location.reload();
                 }
             }
@@ -597,7 +612,7 @@
             deleteAccount() {
                 if (confirm('确定要删除账户吗？此操作不可恢复！')) {
                     localStorage.clear();
-                    alert('账户已删除！');
+                    this.showToast('账户已删除！', 'warning');
                     window.location.href = 'index.html';
                 }
             }
