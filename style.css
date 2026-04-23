@@ -110,6 +110,38 @@ body {
     font-weight: 600;
 }
 
+.game-scoreboard-stats {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    border: 1px solid #d7e7fb;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f8fcff 0%, #eef5ff 100%);
+    box-shadow: 0 4px 12px rgba(43, 84, 138, 0.1);
+    overflow: hidden;
+}
+
+.game-scoreboard-stats .game-score-item {
+    border: none;
+    background: transparent;
+    min-width: 150px;
+    text-align: center;
+    padding: 8px 14px;
+    color: #4b627b;
+    font-size: 0.92rem;
+}
+
+.game-scoreboard-stats .game-score-item + .game-score-item {
+    border-left: 1px solid #d7e7fb;
+}
+
+.game-scoreboard-stats .game-score-item strong {
+    margin-left: 6px;
+    color: #1e3f66;
+    font-size: 1.05rem;
+}
+
 .hero-brand .game-scoreboard,
 .page-hero .game-scoreboard {
     gap: 10px;
@@ -125,6 +157,10 @@ body {
     font-size: 0.9rem;
     font-weight: 500;
     letter-spacing: 0.15px;
+}
+
+.game-panel .game-scoreboard-stats .game-score-item::before {
+    content: none;
 }
 
 .hero-brand .game-score-item::before,
