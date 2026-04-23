@@ -6,6 +6,18 @@ body {
     flex-direction: column;
 }
 
+:root {
+    --ui-surface: rgba(255, 255, 255, 0.94);
+    --ui-surface-strong: #ffffff;
+    --ui-border: #d8e6f6;
+    --ui-text-primary: #1f3852;
+    --ui-text-secondary: #5f7286;
+    --ui-shadow-soft: 0 8px 24px rgba(31, 64, 106, 0.1);
+    --ui-shadow-hover: 0 14px 30px rgba(31, 64, 106, 0.16);
+    --ui-radius-lg: 18px;
+    --ui-radius-md: 14px;
+}
+
 /* 无障碍：键盘快速跳转主内容 */
 .skip-link {
     position: absolute;
@@ -289,23 +301,88 @@ header {
 }
 
 .card {
-    border: none;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease-in-out;
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-lg);
+    box-shadow: var(--ui-shadow-soft);
+    transition: all 0.28s ease;
     overflow: hidden;
-    background: rgba(255, 255, 255, 0.95);
+    background: var(--ui-surface);
     backdrop-filter: blur(10px);
     animation: fadeIn 1s ease-in-out 0.6s both;
 }
 
 .card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    transform: translateY(-4px);
+    box-shadow: var(--ui-shadow-hover);
 }
 
 .card-body {
     padding: 30px;
+}
+
+.card-title,
+.profile-section h2,
+.knowledge-section h2,
+.help-section h2,
+.about-section h2,
+.my-challenges-section h2 {
+    color: var(--ui-text-primary);
+    font-weight: 700;
+    letter-spacing: 0.2px;
+}
+
+.about-section,
+.help-section,
+.knowledge-section,
+.challenge-intro,
+.profile-section,
+.settings-form,
+.achievements-display,
+.stats-content,
+.seasonal-tip {
+    border: 1px solid var(--ui-border);
+    border-radius: var(--ui-radius-md);
+    box-shadow: 0 5px 16px rgba(32, 67, 109, 0.08);
+    background: linear-gradient(180deg, #fbfdff 0%, #f4f9ff 100%);
+}
+
+.about-section,
+.help-section,
+.knowledge-section,
+.profile-section {
+    padding: 20px;
+}
+
+.stat-card,
+.factor-card,
+.tip-card,
+.myth-card,
+.special-case,
+.team-member,
+.challenge-card,
+.my-challenge-item,
+.contact-info,
+.guide-step,
+.health-card,
+.health-stat-item,
+.habit-item {
+    border: 1px solid var(--ui-border);
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(35, 72, 118, 0.08);
+    background: var(--ui-surface-strong);
+}
+
+.challenge-card,
+.stat-card,
+.team-member {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.challenge-card:hover,
+.stat-card:hover,
+.team-member:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(35, 72, 118, 0.14);
 }
 
 .btn {
@@ -465,6 +542,32 @@ header {
 .btn-danger:hover {
     background: linear-gradient(135deg, #ef5350 0%, #e53935 100%);
     color: white;
+}
+
+/* 高级化按钮体系 */
+.btn {
+    border-radius: 14px;
+    border: 1px solid transparent;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #1976d2 0%, #26a69a 100%);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #1e88e5 0%, #42a5f5 100%);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #ed6c02 0%, #ff9800 100%);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #607d8b 0%, #78909c 100%);
 }
 
 /* 弹窗样式 */
@@ -1184,6 +1287,46 @@ footer {
 .dark-theme .seasonal-tip {
     background-color: #2a2a2a;
     border-left-color: #43a047;
+}
+
+.dark-theme .about-section,
+.dark-theme .help-section,
+.dark-theme .knowledge-section,
+.dark-theme .challenge-intro,
+.dark-theme .profile-section,
+.dark-theme .settings-form,
+.dark-theme .achievements-display,
+.dark-theme .stats-content,
+.dark-theme .seasonal-tip {
+    background: linear-gradient(180deg, #1f2733 0%, #1a222d 100%);
+    border-color: #2f3f53;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+}
+
+.dark-theme .stat-card,
+.dark-theme .factor-card,
+.dark-theme .tip-card,
+.dark-theme .myth-card,
+.dark-theme .special-case,
+.dark-theme .team-member,
+.dark-theme .challenge-card,
+.dark-theme .my-challenge-item,
+.dark-theme .contact-info,
+.dark-theme .guide-step,
+.dark-theme .health-card,
+.dark-theme .health-stat-item,
+.dark-theme .habit-item {
+    background: #222c38;
+    border-color: #314358;
+}
+
+.dark-theme .card-title,
+.dark-theme .profile-section h2,
+.dark-theme .knowledge-section h2,
+.dark-theme .help-section h2,
+.dark-theme .about-section h2,
+.dark-theme .my-challenges-section h2 {
+    color: #e7edf7;
 }
 
 .dark-theme footer {
