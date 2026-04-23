@@ -199,10 +199,11 @@ body {
 
 .hero-kicker {
     display: block;
-    margin-top: 4px;
+    margin-top: 2px;
+    margin-bottom: 4px;
     font-size: 0.78rem;
     font-weight: 500;
-    letter-spacing: 0.45px;
+    letter-spacing: 0.2px;
     text-transform: uppercase;
     color: #7c8ea4;
     opacity: 0.95;
