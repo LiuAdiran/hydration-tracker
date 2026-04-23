@@ -98,6 +98,91 @@ body {
     font-weight: 600;
 }
 
+.hero-brand {
+    padding: 14px 10px 4px;
+}
+
+.hero-kicker {
+    display: inline-block;
+    background: rgba(30, 136, 229, 0.12);
+    color: #1e88e5;
+    border: 1px solid rgba(30, 136, 229, 0.22);
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.hero-brand .app-title {
+    background: linear-gradient(135deg, #1e88e5 0%, #26a69a 55%, #7b61ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero-divider {
+    width: 86px;
+    height: 4px;
+    border-radius: 999px;
+    margin: 14px auto 0;
+    background: linear-gradient(90deg, #1e88e5 0%, #4db6ac 100%);
+}
+
+.dashboard-header {
+    background: linear-gradient(135deg, #f6fbff 0%, #f3f8ff 100%);
+    border: 1px solid #d9e8fb;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 24px;
+}
+
+.dashboard-title {
+    margin: 0;
+    color: #2d4563;
+    font-size: 1.9rem;
+    font-weight: 700;
+}
+
+.dashboard-subtitle {
+    margin-top: 8px;
+    color: #6b7a8b;
+}
+
+.content-header {
+    text-align: center;
+    margin-bottom: 26px;
+}
+
+.content-header h1 {
+    margin-bottom: 8px;
+    color: #25384d;
+    font-weight: 700;
+}
+
+.content-header p {
+    margin: 0;
+    color: #6b7a8b;
+}
+
+.illustration-header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.illustration-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #fff1eb 0%, #ffd8c2 100%);
+    box-shadow: 0 8px 20px rgba(255, 147, 84, 0.25);
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
 .game-achievement-tip {
     max-width: 540px;
     margin: 0 auto;
@@ -2228,5 +2313,13 @@ footer {
         margin-right: -20px;
         padding-left: 10px;
         padding-right: 10px;
+    }
+
+    .dashboard-title {
+        font-size: 1.55rem;
+    }
+
+    .hero-brand {
+        padding-top: 6px;
     }
 }
