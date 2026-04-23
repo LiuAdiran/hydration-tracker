@@ -110,6 +110,30 @@ body {
     font-weight: 600;
 }
 
+.hero-brand .game-scoreboard,
+.page-hero .game-scoreboard {
+    gap: 10px;
+}
+
+.hero-brand .game-score-item,
+.page-hero .game-score-item {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    color: #6a7d93;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+}
+
+.hero-brand .game-score-item::before,
+.page-hero .game-score-item::before {
+    content: '•';
+    margin-right: 6px;
+    color: #8ea3ba;
+}
+
 .hero-brand {
     position: relative;
     padding: 34px 24px 22px;
