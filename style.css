@@ -123,6 +123,56 @@ body {
     overflow: hidden;
 }
 
+.page-hero {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 22px 22px 18px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #f8fcff 0%, #f1f8ff 55%, #f7f5ff 100%);
+    border: 1px solid #d6e7fb;
+    box-shadow: 0 10px 26px rgba(43, 84, 138, 0.12);
+}
+
+.page-hero-title {
+    margin: 6px 0 8px;
+    color: #2d4563;
+    font-size: 1.9rem;
+    font-weight: 700;
+}
+
+.page-hero-subtitle {
+    margin: 0;
+    color: #6b7a8b;
+}
+
+.section-title {
+    margin-bottom: 14px;
+    color: var(--ui-text-primary);
+    font-weight: 700;
+    font-size: 1.35rem;
+    letter-spacing: 0.2px;
+}
+
+.profile-hero {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 20px;
+    border-radius: 14px;
+    border: 1px solid var(--ui-border);
+    background: linear-gradient(135deg, #f8fcff 0%, #f0f7ff 100%);
+    margin-bottom: 24px;
+}
+
+.profile-hero-meta h2 {
+    margin: 0;
+}
+
+.profile-hero-meta p {
+    margin: 8px 0 0;
+    color: var(--ui-text-secondary);
+}
+
 .hero-kicker {
     display: inline-block;
     background: rgba(20, 95, 185, 0.1);
@@ -1321,12 +1371,19 @@ footer {
 }
 
 .dark-theme .card-title,
+.dark-theme .section-title,
 .dark-theme .profile-section h2,
 .dark-theme .knowledge-section h2,
 .dark-theme .help-section h2,
 .dark-theme .about-section h2,
 .dark-theme .my-challenges-section h2 {
     color: #e7edf7;
+}
+
+.dark-theme .page-hero,
+.dark-theme .profile-hero {
+    background: linear-gradient(180deg, #1f2733 0%, #1a222d 100%);
+    border-color: #2f3f53;
 }
 
 .dark-theme footer {

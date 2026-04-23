@@ -229,9 +229,10 @@
             <div class="col-12">
                 <div class="card mb-4 wide-card">
                     <div class="card-body">
-                        <div class="dashboard-header">
-                            <h1 class="dashboard-title">个人资料</h1>
-                            <p class="dashboard-subtitle">查看成就、管理账户并维护你的长期补水数据。</p>
+                        <div class="page-hero">
+                            <span class="hero-kicker">Profile Center</span>
+                            <h1 class="page-hero-title">个人资料</h1>
+                            <p class="page-hero-subtitle">查看成就、管理账户并维护你的长期补水数据。</p>
                             <div class="game-scoreboard mt-3">
                                 <div class="game-score-item">数据总览</div>
                                 <div class="game-score-item">成就中心</div>
@@ -239,14 +240,16 @@
                             </div>
                         </div>
                         
-                        <div class="profile-header text-center mb-4">
+                        <div class="profile-hero">
                             <div class="avatar-large" id="user-avatar">💧</div>
-                            <h2 class="mt-3" id="user-name">饮水达人</h2>
-                            <p class="text-muted">等级 <span id="user-level">1</span> | 成就 <span id="achievement-count">0</span> 个</p>
+                            <div class="profile-hero-meta">
+                                <h2 id="user-name">饮水达人</h2>
+                                <p>等级 <span id="user-level">1</span> | 成就 <span id="achievement-count">0</span> 个</p>
+                            </div>
                         </div>
 
                         <div class="profile-section">
-                            <h2 class="mb-3">饮水统计</h2>
+                            <h2 class="section-title">饮水统计</h2>
                             <div class="stats-grid">
                                 <div class="stat-card">
                                     <div class="stat-icon">💧</div>
@@ -282,14 +285,14 @@
                         </div>
 
                         <div class="profile-section">
-                            <h2 class="mb-3">成就展示</h2>
+                            <h2 class="section-title">成就展示</h2>
                             <div id="achievements-display" class="achievements-display">
                                 <p class="text-muted">加载成就中...</p>
                             </div>
                         </div>
 
                         <div class="profile-section">
-                            <h2 class="mb-3">账户设置</h2>
+                            <h2 class="section-title">账户设置</h2>
                             <div class="settings-form">
                                 <div class="mb-3">
                                     <label for="profile-name" class="form-label">昵称</label>
@@ -326,7 +329,7 @@
                         </div>
 
                         <div class="profile-section">
-                            <h2 class="mb-3">数据管理</h2>
+                            <h2 class="section-title">数据管理</h2>
                             <div class="data-actions">
                                 <button class="btn btn-success" id="export-all-data">
                                     <i class="fas fa-download"></i> 导出所有数据
