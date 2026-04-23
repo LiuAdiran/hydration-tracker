@@ -174,16 +174,14 @@ body {
 }
 
 .hero-kicker {
-    display: inline-block;
-    background: rgba(20, 95, 185, 0.1);
-    color: #1565c0;
-    border: 1px solid rgba(21, 101, 192, 0.24);
-    border-radius: 999px;
-    padding: 7px 14px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.7px;
+    display: block;
+    margin-top: 4px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.45px;
     text-transform: uppercase;
+    color: #7c8ea4;
+    opacity: 0.95;
 }
 
 .hero-brand .app-title {
